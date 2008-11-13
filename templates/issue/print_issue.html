@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+	<title>SportsBusiness Daily: <cfoutput>#dateFormat(settings.globalVars.issueDate, "ddddd, mmmm d, yyyy")#</cfoutput></title>
+		<base href="http://www.sportsbusinessdaily.com/">
+	<link rel="stylesheet" href="/printIssue/printIssue.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	{% comment %}
+	  (if swap columns)
+		<cfinclude template = "/printIssue/swapFrontPageColumns.css">
+	{% endcomment %}
+
+	
+	
+	<script language="javascript">
+		if (navigator.userAgent.indexOf("MSIE 6") != -1) {
+			document.write('<link rel="stylesheet" href="/printIssue/<cfif printIssue.swapColumns>swapFrontPageColumns_</cfif>ie6hack.css">')
+		}
+	</script>
+
+	<meta name="ROBOTS" content="NOINDEX, FOLLOW">
+
+</head>
+
+
+<body id="printIssue">
+
+
+<cfoutput>
+
+<!-- BEGIN FRONT PAGE -->
+<div id="frontPage">
+<div id="header">
+	<img src="/printIssue/images/bigLogo2.jpg"/>
+	<div id="dateline">
+		 <div id="date">{{ print_issue }}</div>  	
+		 <div id="volume">Vol. {{ print_issue.volume_number }} -- No. {{ print_issue.issue_number }}</div>
+	</div>
+</div>
+<div id="headlines">
+	{{ print_issue.headlines|safe }}
+</div>
+<div id="topStory">
+	{{ print_issue.top_story|safe }}
+</div>
+
+<cfif printIssue.box1Header neq "" and printIssue.box2Header eq "">
+<br id="clearingBreak">
+
+</cfif>
+
+<div id="quote">
+	<img class="boxHeader" src="/printIssue/Images/quote-of-the-day.jpg" alt="Quote of the Day"/>
+	{{ print_issue.quote_of_the_day|safe }}
+</div>
+
+{% comment %} Only when both boxes are present. {% endcomment %}
+<br id="clearingBreak">
+
+
+<div id="box1">
+	<cfif len(printIssue.box1Header)>
+		<img class="boxHeader" src="/printIssue/images/{{print_issue.box1_header_image}}" alt="{{print_issue.box1_header}}"/>
+	</cfif>
+	{{ print_issue.box2_header_image }}<br> 
+	{{ print_issue.box1|safe }}	
+</div>
+<div id="box2">
+	<cfif len(printIssue.box2Header)>
+		<img class="boxHeader" src="/printIssue/images/{{print_issue.box2_header_image}}" alt="{{print_issue.box2_header}}"/>
+	</cfif>
+	{{ print_issue.box2|safe }}
+</div>
+</div>
+
+<!-- END FRONT PAGE -->
+
+</cfoutput>
+
+<br clear="all">
+<!-- Masthead -->
+<img src="/printIssue/sportsBusinessDaily.jpg" style="MARGIN-TOP:2px;">
+<div id="masthead" align="center" style="DISPLAY:block;WIDTH:659px">
+	{{ print_issue.masthead|safe }}
+</div>
+<img src="/printIssue/tableofcontents.jpg" style="MARGIN-TOP:2px">
+
+
+<!-- Table of Contents -->
+<cfoutput query="articles" group="department">
+<ul class="printIssueTOC">
+	<li>
+		<span class="printIssueTOCHeadline">#department#</span>
+		<ul>
+		<cfoutput>
+			<li>#currentRow#. #headline#</li>
+		</cfoutput>
+		</ul>
+	</li>
+</ul>
+</cfoutput>
+
+<!-- Articles -->
+<cfoutput query="articles" group="department">
+<cfif articles.ad neq ""><div>#articles.ad#</div></cfif>	
+<div class="printIssueBody">
+	<img src="/printIssue/images/#departmentID#.jpg" alt="#department#" class="departmentHeader"/>
+
+	<cfoutput>
+		<div class="story">
+		<h4 class="headline"><span class="storyNumber">#currentRow#.</span> #headline#</h4>
+		<div class='storyText'>#hardIndent(formatArticleLinks(stripEmbeddedObjects(body)))#</div>
+		</div>
+	</cfoutput>
+</div>
+
+</cfoutput>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-776556-2";
+urchinTracker();
+</script>
+
+</body>
+</html>
