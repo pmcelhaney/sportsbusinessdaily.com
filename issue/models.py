@@ -1,11 +1,21 @@
 from django.db import models
 import re
 
-def string_to_image_name(s):
-  non_letters = re.compile("[^A-Za-z0-9-\.\/]")
-  return non_letters.sub("", s.replace(' ', '-')) + '.jpg'
 
 
+
+def int2roman(number):
+  """ 
+  convert an integer to a roman numeral
+  Source: http://www.daniweb.com/code/snippet635.html
+  """
+  numerals = { 1 : "I", 4 : "IV", 5 : "V", 9 : "IX", 10 : "X", 40 : "XL", 50 : "L", 90 : "XC", 100 : "C", 400 : "CD", 500 : "D", 900 : "CM", 1000 : "M" }
+  result = ""
+  for value, numeral in sorted(numerals.items(), reverse=True):
+    while number >= value:
+      result += numeral
+      number -= value
+  return result
   
 class Section(models.Model):
   name = models.CharField(max_length=200)
@@ -26,21 +36,18 @@ class PrintIssue(models.Model):
   quote_of_the_day = models.TextField()
   volume_number = models.IntegerField()
   issue_number = models.IntegerField()
-  box1_header = models.CharField(max_length=50)
+  box1_header = models.CharField(max_length=50,blank=True)
   box1 = models.TextField()
-  box2_header = models.CharField(max_length=50)
+  box2_header = models.CharField(max_length=50,blank=True)
   box2 = models.TextField()
   masthead = models.TextField()
   
-  
+  def issue_date(self):
+    return self.issue.issue_date
     
-  
-  def box1_header_image(self): 
-    return string_to_image_name(self.box1_header)
-  
-  def box2_header_image(self):
-    return string_to_image_name(self.box2_header)
-  
+  def volume_number_roman(self):
+    return int2roman(self.volume_number)
+    
   def __unicode__(self):
     return self.issue.__unicode__()
   
@@ -50,6 +57,7 @@ class Article(models.Model):
   headline = models.CharField(max_length=200)
   mini_headline = models.CharField(max_length=200)
   body = models.TextField()
+  number = 0
 
   def __unicode__(self):
     return self.headline  

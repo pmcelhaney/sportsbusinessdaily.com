@@ -8,7 +8,7 @@
 
 	{% comment %}
 	  (if swap columns)
-		<cfinclude template = "/printIssue/swapFrontPageColumns.css">
+		<link rel="stylesheet" href="/printIssue/swapFrontPageColumns.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	{% endcomment %}
 
 	
@@ -34,8 +34,8 @@
 <div id="header">
 	<img src="/printIssue/images/bigLogo2.jpg"/>
 	<div id="dateline">
-		 <div id="date">{{ print_issue }}</div>  	
-		 <div id="volume">Vol. {{ print_issue.volume_number }} -- No. {{ print_issue.issue_number }}</div>
+		 <div id="date">{{ print_issue.issue_date|date:"l, F j, Y" }}</div>  	
+		 <div id="volume">Vol. {{ print_issue.volume_number_roman }} -- No. {{ print_issue.issue_number }}</div>
 	</div>
 </div>
 <div id="headlines">
@@ -60,16 +60,15 @@
 
 
 <div id="box1">
-	<cfif len(printIssue.box1Header)>
-		<img class="boxHeader" src="/printIssue/images/{{print_issue.box1_header_image}}" alt="{{print_issue.box1_header}}"/>
-	</cfif>
-	{{ print_issue.box2_header_image }}<br> 
+	{% if print_issue.box1_header %}
+		<img class="boxHeader" src="/printIssue/images/{{print_issue.box1_header|slugify}}.jpg" alt="{{print_issue.box1_header}}"/>
+	{% endif %}
 	{{ print_issue.box1|safe }}	
 </div>
 <div id="box2">
-	<cfif len(printIssue.box2Header)>
-		<img class="boxHeader" src="/printIssue/images/{{print_issue.box2_header_image}}" alt="{{print_issue.box2_header}}"/>
-	</cfif>
+	{% if print_issue.box2_header %}
+		<img class="boxHeader" src="/printIssue/images/{{print_issue.box2_header|slugify}}.jpg" alt="{{print_issue.box2_header}}"/>
+	{% endif %}
 	{{ print_issue.box2|safe }}
 </div>
 </div>
@@ -89,16 +88,29 @@
 
 <!-- Table of Contents -->
 <cfoutput query="articles" group="department">
+	
+
+{% regroup articles by section as articles_by_section %}
+
+{% for section in articles_by_section %}	
 <ul class="printIssueTOC">
 	<li>
-		<span class="printIssueTOCHeadline">#department#</span>
+		<span class="printIssueTOCHeadline">{{ section.grouper }}</span>
 		<ul>
+		{% for article in section.list %}	
 		<cfoutput>
-			<li>#currentRow#. #headline#</li>
+			<li>{{ article.number }}. {{ article.headline }}</li>
 		</cfoutput>
+		{% endfor %}
 		</ul>
 	</li>
 </ul>
+{% endfor %}
+
+
+
+
+
 </cfoutput>
 
 <!-- Articles -->
