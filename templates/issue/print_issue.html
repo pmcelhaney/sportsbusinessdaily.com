@@ -7,7 +7,8 @@
 	<link rel="stylesheet" href="/printIssue/printIssue.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
 	{% comment %}
-	  (if swap columns)
+	  TODO: Swap columns
+		(if swap columns)
 		<link rel="stylesheet" href="/printIssue/swapFrontPageColumns.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	{% endcomment %}
 
@@ -115,16 +116,26 @@
 
 <!-- Articles -->
 <cfoutput query="articles" group="department">
-<cfif articles.ad neq ""><div>#articles.ad#</div></cfif>	
+<div>(TODO: Print issue ads)</div>
 <div class="printIssueBody">
-	<img src="/printIssue/images/#departmentID#.jpg" alt="#department#" class="departmentHeader"/>
+	
+	{% for section in articles_by_section %}	
+	<ul class="printIssueTOC">
+		<li>
+			<img src="/printIssue/images/{{ section.grouper|slugify }}.jpg" alt="{{ section.grouper }}" class="departmentHeader"/>
 
-	<cfoutput>
-		<div class="story">
-		<h4 class="headline"><span class="storyNumber">#currentRow#.</span> #headline#</h4>
-		<div class='storyText'>#hardIndent(formatArticleLinks(stripEmbeddedObjects(body)))#</div>
-		</div>
-	</cfoutput>
+			<ul>
+			{% for article in section.list %}	
+			<div class="story">
+			<h4 class="headline"><span class="storyNumber">{{ article.number }}.</span> {{ article.headline }}</h4>
+			<div class='storyText'>[TODO: hardindent] {{article.body|removetags:"embed object"|safe}}</div>
+			</div>
+			{% endfor %}
+			</ul>
+		</li>
+	</ul>
+	{% endfor %}
+
 </div>
 
 </cfoutput>
