@@ -114,6 +114,8 @@
 
 </cfoutput>
 
+{% load print_issue %}
+
 <!-- Articles -->
 <cfoutput query="articles" group="department">
 <div>(TODO: Print issue ads)</div>
@@ -128,7 +130,7 @@
 			{% for article in section.list %}	
 			<div class="story">
 			<h4 class="headline"><span class="storyNumber">{{ article.number }}.</span> {{ article.headline }}</h4>
-			<div class='storyText'>[TODO: hardindent] {{article.body|removetags:"embed object"|safe}}</div>
+			<div class='storyText'>{{article.body|removetags:"embed object"|hard_indent|safe}}</div>
 			</div>
 			{% endfor %}
 			</ul>
