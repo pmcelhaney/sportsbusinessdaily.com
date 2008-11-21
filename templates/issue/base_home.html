@@ -1,0 +1,187 @@
+{% extends "issue/sbd_base.html" %}
+{% block content %}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	
+<!-- BEGIN LEFT COLUMN -->	
+<td width="155" valign="top" style="background-image:url(/templateimg/leftGutterBG.gif);width:155px;background-repeat:repeat-y;">
+
+
+<table width="155" border="0" cellpadding="0" cellspacing="0">
+
+
+<!-- Current Issue -->
+<tr>
+<td valign="top">
+
+<span style="padding:10px;display:block;" class="rightside">
+<cfoutput>
+{{ issue.issue_date|date:"l" }}<br>
+{{ issue.issue_date|date:"F j, Y" }}<br>
+Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
+<b><a href="" style="text-decoration:none;color:##000000;font-size:12px;" onclick="openPrintDialog('#dateFormat(settings.globalVars.issueDate, 'yyyy-mm-dd')#'); return false;" class="h4">Print This Issue <img src="/templateimg/printIcon.gif" border="0"></a></b>
+</cfoutput>
+</span>
+
+<table width="155" border="0" cellpadding="0" cellspacing="0"><tr><td>
+<div id="sideNav">
+<ul id="nav">
+  {% regroup articles by section as articles_by_section %}	
+	{% for section in articles_by_section %}
+  <li>
+		<a href="/index.cfm?fuseaction=sbd.all&amp;ArticleID=#ArticleID#">{{ section.grouper }} </a>
+    <ul>
+    {% for article in section.list %}
+      <li><a href="/article/{{ article.article_id }}">{{ article.mini_headline }}</a></li>
+    {% endfor	%}
+    </ul>
+  </li>
+  {% endfor %}
+</ul>
+</div>
+</td></tr></table>
+
+</td>
+</tr>
+
+
+
+<!-- Left side ad -->
+<tr>
+<td align="center" valign="top">
+<br>[ad 120x240]<br>
+</td>
+</tr>
+<tr height="20"><td>&nbsp;</td></tr>
+
+<!-- Most viewed stories -->
+<cfinclude template="../dsp_mostViewed.cfm">
+<tr height="20"><td>&nbsp;</td></tr>
+
+
+<!-- Recent Issues -->
+<tr>
+	<td class="sideSectHead">
+		RECENT ISSUES
+	</td>
+</tr>
+<tr>
+<td style="font-size:8px;">
+<div class="lists" style="font-size:8px;">
+<cfoutput>
+<ul class="moreLink" style="font-size:8px;">
+<li style="font-size:8px;padding-bottom:3px;"><a class="moreLink" href="/index.cfm?fuseaction=#xfa.home#&postDate=#dateformat(settings.globalVars.currentIssueDate,'yyyy-mm-dd')#">Current Issue</a></li>
+
+<li style="font-size:8px;padding-bottom:3px;"><a href="">November 10</a></li>
+<li style="font-size:8px;padding-bottom:3px;"><a href="">November 9</a></li>
+<li style="font-size:8px;padding-bottom:3px;"><a href="">November 8</a></li>
+<li style="font-size:8px;padding-bottom:3px;"><a href="">...</a></li>
+</ul>
+</cfoutput>
+</div>
+</td>
+</tr>
+<tr height="20"><td>&nbsp;</td></tr>
+
+<!-- This week's SBJ -->
+<tr><td class="sideSectHead">THIS WEEK'S SBJ</td></tr>
+<tr>
+	<td>
+		<a href="http://www.sportsbusinessjournal.com"><img src="/content/sbjcover/<cfoutput>#settings.globalVars.sbjcover#</cfoutput>"></a>
+		<a href="http://www.sportsbusinessjournal.com">Read This Week's Issue</a>
+	</td>
+</tr>
+</table>
+
+</td>
+<!-- END LEFT COLUMN -->
+
+
+<!-- BEGIN CENTER CONTENT --->
+<td style="padding:5px;" width="395" valign="top">
+{% block home_page %}[home_page block] {% endblock %}
+</td>
+<!-- END CENTER CONTENT -->
+
+
+
+<!--- BEGIN RIGHT COLUMN --->
+<td width="210" valign="top" style="border-left:1px solid #000000;border-right:1px solid #000000;">
+						
+<table border="0" cellpadding="0" cellspacing="0">
+
+<!-- Morning Buzz -->
+<tr>
+<td background="/templateimg/buzzBellBG.gif" width="210" height="22" class="buzzBell">
+<a href="<cfoutput>/index.cfm?fuseaction=tdi.morningBuzz</cfoutput>">MORNING BUZZ - 9:00am ET</a>
+</td>
+</tr>
+
+<!-- Closing Bell -->
+<tr>
+<td background="/templateimg/buzzBellBG.gif" height="22" class="buzzBell">
+<a href="<cfoutput>/index.cfm?fuseaction=tdi.closingBell</cfoutput>">CLOSING BELL - 4:00pm ET</a></td>
+</tr>
+							
+							
+<cfif isDefined("settings.globalVars.tdiText") and settings.globalVars.tdiText NEQ "">
+<!-- Latest News -->
+<tr><td class="sideSectHead">LATEST NEWS</td></tr>
+<tr><td style="padding:0 5px; border:1px solid #cccccc;" id="latestNewsBox"><cfoutput>[TDI Text]</cfoutput></td></tr>
+<tr height="20"><td>&nbsp;</td></tr>
+</cfif>
+
+
+<cfoutput>
+<!-- Resource Center -->	
+<tr><td class="sideSectHead">RESOURCE CENTER</td></tr>
+<tr>
+<td style="padding:0px;border:1px solid ##cccccc;">
+<div class="rightside">
+<ul class="lists">
+	<li>
+		<strong><a href="/index.cfm?fuseaction=tdi.articlesOfInterest">The Daily's Hot Reads</a></strong>
+		<cfif isDefined("settings.globalVars.aoiLinksText") and settings.globalVars.aoiLinksText NEQ ""><br><div style="padding-left:10px;" class="resourcesub"><a href="/index.cfm?fuseaction=tdi.articlesOfInterest##aoi1">[aoi links text]</a></div></cfif>
+	</li>
+	<li>
+		<strong><a href="/index.cfm?fuseaction=tdi.sportsBusinessWire">Sports Business Wire</a></strong>
+	</li>
+</ul>
+</div>
+</td>
+</tr>
+</cfoutput>
+
+
+<!-- rightColumn global variable -->						
+<tr><td><cfoutput><div class="rightside">[right column]</div></cfoutput></td></tr>
+<tr height="20"><td>&nbsp;</td></tr>
+			
+
+<!-- Quote of the day -->
+<tr><td class="sideSectHead"><a name="qod"></a>QUOTE OF THE DAY</td></tr>
+<tr><td style="padding:5px;border:1px solid #cccccc; text-align: center;">{{ issue.quote_of_the_day|safe }}</td></tr>
+<tr height="20"><td>&nbsp;</td></tr>
+
+
+<tr><td class="sideSectHead">THE DAILY STAT</td></tr>
+<tr><td style="padding:0px;border:1px solid #cccccc;">[SBW Links Text]</td></tr>
+<tr height="20"><td>&nbsp;</td></tr>
+
+
+<!-- Right column ad -->
+<tr><td align="center">[ad 120x240]<br/><br/></td></tr>
+
+</table>
+
+
+</td>
+<!-- END RIGHT COLUMN -->
+
+</tr>
+</table>			
+
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "issue/base_home.html" %}
+
+
+
+{% block home_page %}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+<!-- Top Stories -->
+<tr><td class="bodySectHead">TOP STORIES</td></tr>
+
+<tr>
+<td valign="top">
+
+<div id="topStory">
+{{ issue.top_story|safe }}
+</div>
+
+<div id="headlines">
+{{ issue.headlines|safe }}
+</div>
+
+<br/>
+
+</td>
+</tr>
+
+</cfoutput>
+
+
+<!-- Departments -->
+<tr><td class="bodySectHead">DEPARTMENTS</td></tr>
+
+<tr>
+<td>
+	
+	
+	
+	<table width="100%" cellpadding="5" cellspacing="0" border="0">
+	<tr>
+					
+	<td valign="top">
+	{% regroup articles by section as articles_by_section %}	
+	{% for section in articles_by_section %}
+
+		<table style="border:1px solid ##cccccc;" width="100%" cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td>
+				<div class="depHeads">{{ section.grouper }}</div>
+				<div class="deptlists">
+					<ul class="moreLink">
+					{% for article in section.list %}	
+						<li><a href="/article/{{ article.article_id }}">{{ article.mini_headline }}</a></li>
+					{% endfor %}
+					</ul>
+				</div>
+				</td>
+			</tr>
+		</table>
+
+
+
+	<br>
+	{% endfor %}
+
+	</td>
+	
+	<td width="50%" valign="top">
+		Second column of headlines
+	</td>
+	</tr>
+	</table>
+
+
+</td>
+</tr>
+</table>
+
+
+
+{% endblock %}

@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<cfoutput>
+<base href="http://www.sportsbusinessdaily.com/">
+<title>{% block title %}SportsBusiness Daily{% endblock %}</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="keywords" content="#htmlEditFormat(attributes.metaKeywords)#">
+<meta name="description" content="#htmlEditFormat(attributes.metaDescription)#">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script type="text/javascript" src="/lib/jquery.validate.min.js"></script>
+
+</cfoutput>
+
+<link rel="stylesheet" href="/templateimg/css/yadmmeta.css" type="text/css">
+<link rel="stylesheet" href="/templateimg/css/yadmnojs.css" type="text/css">
+<link rel="stylesheet" href="/templateimg/css/yadmflyout.css" type="text/css">
+
+
+
+
+<style type="text/css">
+	#sideNav { z-index: 100; position: relative;}
+</style>
+
+<cfoutput>
+<link href="/lib/semantic-form.css" rel="stylesheet" type="text/css">	
+<link href="/lib/sbd-2.0.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/lib/shadowbox/shadowbox.css"/>
+</cfoutput>
+
+</head>
+
+
+
+
+<body>
+
+<div class="rightside"><b>SportsBusiness Daily &mdash; Sports Business Resources &mdash; your sports business news and information source.  <a href="/index.cfm?fuseaction=page.static&staticId=1">Learn More</a></b></div>
+
+<table width="760" border="0" cellpadding="0" cellspacing="0">
+
+<!-- Top Ad -->
+<tr>
+<td colspan="2" align="center" style="padding-top:0px;">
+[720 x 90 ad]
+</td>
+</tr>
+
+
+<!-- Logo and search box -->
+<tr height="66">
+<td style="width:530px;"><a href="/"><img src="/templateimg/logo.gif" border="0"></a></td>
+<td style="text-align:right;width:230px;background-image:url(/templateimg/magGlass.gif);background-repeat:no-repeat;">
+	<div style="position:relative;top:25px;">
+	<cfoutput>
+	<form action="#settings.self#" name="search" method="get">
+	<a href="javascript:window.location.href='#settings.self#fuseaction=archive.show_adv_search&keyword=' + document.forms.search.keyword.value" style="font-size:11px;">Advanced</a><br>
+	<input type="hidden" name="fuseaction" value="#xfa.do_search#">
+	<input type="text" name="keyword" value=""> 
+	<input type="hidden" name="searchType" value="basic" id="searchType">
+	<input type="hidden" name="RequestTimeout" value="120">
+	<input type="submit" value="Search" class="searchBtn">
+	</form>
+	</cfoutput>
+	</div>
+</td>
+</tr>
+
+
+<!-- Top Navigation -->
+<tr>
+<td colspan="2">
+	<table border="0" class="topNavWidth" cellpadding="0" cellspacing="0">
+	<tr>
+	<td class="topNav"><a href="<cfoutput>#settings.self#fuseaction=#xfa.home#&postDate=#dateformat(settings.globalVars.issueDate,'yyyy-mm-dd')#</cfoutput>">Home</a></td>
+	<td class="topNav"><a href="<cfoutput>#settings.self#fuseaction=#xfa.page#&staticId=1</cfoutput>">About Us</a></td>
+	<td class="topNav"><a href="<cfoutput>#settings.self#fuseaction=#xfa.page#&staticId=2</cfoutput>">Advertise With Us</a></td>
+	<td class="topNav"><a href="<cfoutput>#settings.self#fuseaction=sbd.all&ArticleID=#attributes.qClassifiedLink.ArticleID#</cfoutput>">Marketplace/Classifieds</a></td>
+	<td class="topNav"><a href="<cfoutput>#settings.self#fuseaction=#xfa.page#&staticId=14</cfoutput>">College &amp; University Program</a></td>
+	<td class="topNav"><a href="<cfoutput>#settings.self#fuseaction=register.sub</cfoutput>">Subscribe/Trial</a></td>
+	<td class="topNav"><a href="<cfoutput>#settings.self#fuseaction=#xfa.profile#</cfoutput>">My Account</a></td>
+	</tr>
+	</table>
+</td>
+</tr>
+
+<!-- Left menu and page body -->
+<tr>
+<td colspan="2" valign="top">
+{% block content %}
+[Content goes here.]
+{% endblock %}
+
+</td>
+</tr>
+	
+<!-- Bottom ad -->
+<tr style="background-color:#edede7;color:#8B8989;font-size:9px;height:40px;">
+<td valign="top" style="padding:5px;border-top:1px solid #000000;border-right:1px solid #000000;border-bottom:1px solid #000000;font-size:9px;" colspan="2">
+
+[720x90 ad]
+
+</td>
+</tr>
+
+<!-- Footer (copyright, etc.) -->
+<tr style="background-color:#edede7;color:#8B8989;font-size:9px;height:40px;">
+<td valign="top" style="border-bottom:1px solid #000000;border-top:1px solid #000000;padding-left:5px;font-size:9px;">
+<div style="font-size:9px;">A Publication of Street &amp; Smith's Sports Group<br><a href="<cfoutput>#settings.self#</cfoutput>fuseaction=page.static&staticID=10">Privacy Policy</a> - <a href="<cfoutput>#settings.self#</cfoutput>fuseaction=page.static&staticID=8">Terms of Service</a></div>
+</td>
+<td valign="top" align="right" style="padding-right:5px;border-top:1px solid #000000;border-right:1px solid #000000;border-bottom:1px solid #000000;font-size:9px;">
+<div style="font-size:9px;">&copy; <cfoutput>#year(now())#</cfoutput> Street &amp; Smith's Sports Group<br>All Rights Reserved</div>
+</td>			
+</tr>
+
+</table>
+
+
+<!-- Tower ad hanging off the right side of the page -->
+<div style="position: absolute; top: 240px; left: 790px">
+<cfoutput>[160x600 ad]</cfoutput>
+</div>
+
+
+<script type="text/javascript" src="/lib/shadowbox/shadowbox-jquery.js"></script>
+<script type="text/javascript" src="/lib/shadowbox/shadowbox.js"></script>
+
+<script type="text/javascript">
+
+// Convert YouTube links embedded video links using Shadwobox.
+$(document).ready( function() {
+	$('a[href*=www.youtube.com/watch]').each(function (index, link) 
+	{
+		var href = $(link).attr('href');
+		$(link).attr('href', href.replace(/watch\?v=([^&]+)/, 'v/$1&hl=en&autoplay=1'));
+		$(link).attr('rel', 'shadowbox;width=405;height=340');
+	});
+});
+
+$(document).ready(function(){
+
+
+	var onShadowboxOpen = function (gallery) {
+		var slash = /\/$/.test(window.location.pathname) ? '' : '/';
+		pageTracker._trackPageview(window.location.pathname + slash + 'shadowbox/' + (gallery.gallery || $(gallery.el).attr('href').replace(/^.+\//, '')) + '/open');				
+	};
+
+	var onShadowboxClose = function () {
+		$('#shadowBanner').remove();			
+	};
+	
+	var onShadowboxChange = function (gallery) {
+		
+		var slash = /\/$/.test(window.location.pathname) ? '' : '/';
+		pageTracker._trackPageview(window.location.pathname + slash + 'shadowbox/' + (gallery.gallery || $(gallery.el).attr('href').replace(/^.+\//, '')) + '/change');				
+				
+		var ord = Math.random();
+		$('#shadowBanner img').hide();
+		$('#shadowBanner img').attr('src', 'http://ad.doubleclick.net/ad/bzj.sportsbizdaily/wcosslide;pos=tb1;sz=728x90;ord='+ ord + '?');	
+		$('#shadowBanner a').attr('href', 'http://ad.doubleclick.net/jump/bzj.sportsbizdaily/wcosslide;pos=tb1;sz=728x90;ord=' + ord + '?');	
+		$('#shadowBanner img').show();
+		};
+
+    var options = {
+       	overlayBgImage: '/lib/shadowbox/overlay-85.png'
+				, loadingImage:   '/lib/shadowbox/loading.gif' 
+				, overlayOpacity: 0.7 
+				, continuous: true 
+				, onOpen: onShadowboxOpen
+				, onClose: onShadowboxClose
+				, onChange: onShadowboxChange
+				, flvPlayer: '/lib/shadowbox/flvplayer.swf'
+    };
+
+    Shadowbox.init(options);
+		
+
+		if (location.hash === '#sbaslideshow' && document.getElementById('sbaSlideShow1')) {	
+			Shadowbox.open(document.getElementById('sbaSlideShow1'));
+		}
+		
+		var onPopupClick = function () {
+			var rel = $(this).attr('rel');
+			var features = rel.match(/popup(;([^ ]+))?/)[2];
+			var url = $(this).attr('href');
+			window.open(url, '_blank', features ? features.replace(/;/g, ',') : '');
+			return false;
+		};
+
+		$('a[rel*=popup]').click(onPopupClick);
+
+
+});
+
+</script>
+
+<script language="JavaScript">
+function openPrintDialog(issueDate) {
+	var URL = '<cfoutput>#settings.self#fuseaction=printIssue.dialog</cfoutput>';
+	if (issueDate) URL += '&postDate=' + issueDate;
+	var printDialog =  window.open(URL, 'printDialog', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=525,height=250');
+	if (printDialog) {
+		printDialog.focus();
+	} else {
+		alert('Please disable pop-up blocking for this web site and try again.')
+	}
+
+}
+</script>
+
+<script type="text/javascript" src="/templateimg/js/yadm.js"></script>
+
+
+<!-- Google Analytics tracking code -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-776556-2");
+pageTracker._initData();
+pageTracker._trackPageview();
+pageTracker._setVar('<cfoutput>#getCurrentUser().getType()#</cfoutput>');
+</script>
+
+</body>
+</html>
