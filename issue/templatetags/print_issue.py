@@ -15,6 +15,6 @@ class CounterNode(template.Node):
     self.count += 1
     return self.count
     
-@register.tag(name='counter')
+@register.tag
 def counter(parser, token):
   return CounterNode()
