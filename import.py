@@ -54,7 +54,8 @@ for record in csv_reader(open("data/october_issues.csv")):
 
 print "\nPRINT ISSUES"  
 for record in csv_reader(open("data/october_printissues.csv")):
-  pi = PrintIssue(issue=Issue(pk=parse_datetime(record['issuedate'])))
+  issue = Issue(pk=parse_datetime(record['issuedate']))
+  pi = issue.printissue
   pi.top_story = record['topstory']
   pi.headlines = record['headlines']
   pi.quote_of_the_day = record['quote']
