@@ -1,27 +1,75 @@
-import pymssql
-from issue.models import PrintIssue, Issue
+from django.conf import settings
 
-con = pymssql.connect(user='sportsbusinessdaily',password='w=ucUkA3',host='hmnclustdb01',database='sportsbusinessdaily')
-cursor = con.cursor()
-sql = "select top 5 issueDate, cast(topStory as text) as topstory, cast(headlines as text) as headlines, cast(quote as text) as quote, box1header, box2header, cast(box1 as text) as box1, cast(box2 as text) as box2, volume, number, swapcolumns, cast(masthead as text) as masthead from printissues where issueDate < '2008-11-01' order by issueDate desc"
+import os
 
-cursor.execute(sql)
+settings.configure(
+    DEBUG = True,
+    DATABASE_ENGINE = 'sqlite3',          
+    DATABASE_NAME = os.path.join(os.path.dirname(__file__), 'sbd.db').replace('\\','/'),
+)
 
-print cursor.rowcount
+from issue.models import *
 
-first_issue = cursor.fetchall()[0]
+import csv
+from datetime import *
 
-issue = Issue()
-issue.issue_date = first_issue[0]
-issue.save()
+class csv_reader:
+  def __init__(self, file):
+    self.reader = csv.reader(file)
+    columns = self.reader.next()
+    self.column_map = dict([(columns[i].lower(), i) for i in range(0, len(columns))])
+  
+  def __iter__(self):
+    return self
+    
+  def next(self):
+    self.current = self.reader.next()
+    return self
+  
+  def __getitem__(self, name):
+    return unicode(self.current[self.column_map[name]], 'utf-8')
 
-print_issue = PrintIssue()
-print_issue.issue = issue
-print_issue.top_story = first_issue[1]
-print_issue.headlines = first_issue[2]
-print_issue.quote_of_the_day = first_issue[3]
-print_issue.volume_number = 15
-print_issue.issue_number = 99
-print_issue.save()
+  def columns(self):
+    return self.column_map
 
-print print_issue
+
+def parse_datetime(str):
+  date_part = str.split(' ')[0]
+  return datetime.strptime(date_part, '%m/%d/%Y')
+  
+
+for record in csv_reader(open("data/departments.csv")):  
+  section = Section(pk=record['departmentid'])
+  section.name = record['department']
+  print section
+  section.save()
+
+for record in csv_reader(open("data/october_issues.csv")):
+  issue = Issue(pk=parse_datetime(record['issuedate']))
+  print issue
+  issue.save()
+  
+for record in csv_reader(open("data/october_printissues.csv")):
+  pi = PrintIssue(issue=Issue(pk=parse_datetime(record['issuedate'])))
+  pi.top_story = record['topstory']
+  pi.headlines = record['headlines']
+  pi.quote_of_the_day = record['quote']
+  pi.box1_header = record['box1header']
+  pi.box1 = record['box1']
+  pi.box2_header = record['box2header']
+  pi.box2 = record['box2']
+  pi.volume_number = 12
+  pi.issue_number = 99
+  print pi
+  pi.save()
+ 
+for record in csv_reader(open("data/october_articles.csv")):
+  if (record['department'] != '(null)'):
+    article = Article(pk=record['articleid'])
+    article.issue = Issue(pk=parse_datetime(record['postdate']))
+    article.section = Section(pk=record['department'])
+    article.headline = record['headline']
+    article.mini_headline = record['miniheadline']
+    article.body = record['body']
+    print article
+    article.save()    

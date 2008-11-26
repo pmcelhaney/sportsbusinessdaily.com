@@ -30,7 +30,7 @@ class Issue(models.Model):
     return self.issue_date.strftime('%A, %b %d, %Y')
 
 class PrintIssue(models.Model):
-  issue = models.OneToOneField(Issue)
+  issue = models.OneToOneField(Issue,primary_key=True)
   top_story = models.TextField()
   headlines = models.TextField()
   quote_of_the_day = models.TextField()
@@ -59,4 +59,4 @@ class Article(models.Model):
   body = models.TextField()
 
   def __unicode__(self):
-    return self.headline  
+    return self.headline
