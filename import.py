@@ -38,7 +38,7 @@ def parse_datetime(str):
   return datetime.strptime(date_part, '%m/%d/%Y')
   
 
-print "\nSECTIONS"M
+print "\nSECTIONS"
 for record in csv_reader(open("data/departments.csv")):  
   section = Section(pk=record['departmentid'])
   section.name = record['department']
