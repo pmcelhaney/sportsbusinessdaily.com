@@ -38,17 +38,21 @@ def parse_datetime(str):
   return datetime.strptime(date_part, '%m/%d/%Y')
   
 
+print "\nSECTIONS"M
 for record in csv_reader(open("data/departments.csv")):  
   section = Section(pk=record['departmentid'])
   section.name = record['department']
   print section
   section.save()
 
+print "\nISSUES"
+
 for record in csv_reader(open("data/october_issues.csv")):
   issue = Issue(pk=parse_datetime(record['issuedate']))
   print issue
   issue.save()
-  
+
+print "\nPRINT ISSUES"  
 for record in csv_reader(open("data/october_printissues.csv")):
   pi = PrintIssue(issue=Issue(pk=parse_datetime(record['issuedate'])))
   pi.top_story = record['topstory']
@@ -59,10 +63,12 @@ for record in csv_reader(open("data/october_printissues.csv")):
   pi.box2_header = record['box2header']
   pi.box2 = record['box2']
   pi.volume_number = 12
-  pi.issue_number = 99
+  pi.issue_number = 11
   print pi
   pi.save()
  
+ 
+print "\nARTICLES" 
 for record in csv_reader(open("data/october_articles.csv")):
   if (record['department'] != '(null)'):
     article = Article(pk=record['articleid'])
