@@ -25,6 +25,11 @@ class Section(models.Model):
   
 class Issue(models.Model):
   issue_date = models.DateField(primary_key=True)
+  volume_number = models.IntegerField()
+  issue_number = models.IntegerField()
+  
+  def volume_number_roman(self):
+    return int2roman(self.volume_number)
   
   def __unicode__ (self):
     return self.issue_date.strftime('%A, %b %d, %Y')
@@ -34,8 +39,6 @@ class PrintIssue(models.Model):
   top_story = models.TextField()
   headlines = models.TextField()
   quote_of_the_day = models.TextField()
-  volume_number = models.IntegerField()
-  issue_number = models.IntegerField()
   box1_header = models.CharField(max_length=50,blank=True)
   box1 = models.TextField()
   box2_header = models.CharField(max_length=50,blank=True)
@@ -45,8 +48,11 @@ class PrintIssue(models.Model):
   def issue_date(self):
     return self.issue.issue_date
     
+  def issue_number(self):
+  	return self.issue.issue_number    
+    
   def volume_number_roman(self):
-    return int2roman(self.volume_number)
+    return self.issue.volume_number_roman()
     
   def __unicode__(self):
     return self.issue.__unicode__()

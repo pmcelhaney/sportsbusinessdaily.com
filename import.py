@@ -49,6 +49,8 @@ print "\nISSUES"
 
 for record in csv_reader(open("data/october_issues.csv")):
   issue = Issue(pk=parse_datetime(record['issuedate']))
+  issue.volume_number = 12
+  issue.issue_number = 11
   print issue
   issue.save()
 
@@ -67,8 +69,6 @@ for record in csv_reader(open("data/october_printissues.csv")):
   pi.box1 = record['box1']
   pi.box2_header = record['box2header']
   pi.box2 = record['box2']
-  pi.volume_number = 12
-  pi.issue_number = 11
   print pi
   pi.save()
  
