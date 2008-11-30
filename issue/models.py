@@ -28,6 +28,7 @@ class Issue(models.Model):
   volume_number = models.IntegerField()
   issue_number = models.IntegerField()
   
+  @property
   def volume_number_roman(self):
     return int2roman(self.volume_number)
   
@@ -45,14 +46,17 @@ class PrintIssue(models.Model):
   box2 = models.TextField()
   masthead = models.TextField()
   
+  @property 
   def issue_date(self):
     return self.issue.issue_date
-    
+   
+  @property      
   def issue_number(self):
   	return self.issue.issue_number    
-    
+  
+  @property  
   def volume_number_roman(self):
-    return self.issue.volume_number_roman()
+    return self.issue.volume_number_roman
     
   def __unicode__(self):
     return self.issue.__unicode__()
