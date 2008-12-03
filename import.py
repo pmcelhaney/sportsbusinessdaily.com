@@ -46,13 +46,25 @@ for record in csv_reader(open("data/departments.csv")):
   section.save()
 
 print "\nISSUES"
-
 for record in csv_reader(open("data/october_issues.csv")):
   issue = Issue(pk=parse_datetime(record['issuedate']))
   issue.volume_number = 12
   issue.issue_number = 11
   print issue
   issue.save()
+
+print "\nHOME PAGES"  
+for record in csv_reader(open("data/october_issues.csv")):
+  issue = Issue(pk=parse_datetime(record['issuedate']))
+  try:
+  	hp = issue.homepage
+  except HomePage.DoesNotExist:
+  	hp = HomePage(issue=issue)
+  hp.top_story = record['homepage_topstory']
+  hp.headlines = record['homepage_headlines']
+  hp.quote_of_the_day = record['homepage_quote']
+  print hp
+  hp.save()
 
 
 print "\nPRINT ISSUES"  

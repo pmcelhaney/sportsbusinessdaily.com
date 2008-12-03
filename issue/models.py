@@ -35,6 +35,27 @@ class Issue(models.Model):
   def __unicode__ (self):
     return self.issue_date.strftime('%A, %b %d, %Y')
 
+class HomePage(models.Model):
+  issue = models.OneToOneField(Issue,primary_key=True)
+  top_story = models.TextField()
+  headlines = models.TextField()
+  quote_of_the_day = models.TextField()
+  
+  @property 
+  def issue_date(self):
+    return self.issue.issue_date
+   
+  @property      
+  def issue_number(self):
+  	return self.issue.issue_number    
+  
+  @property  
+  def volume_number_roman(self):
+    return self.issue.volume_number_roman
+    
+  def __unicode__(self):
+    return self.issue.__unicode__()
+   
 class PrintIssue(models.Model):
   issue = models.OneToOneField(Issue,primary_key=True)
   top_story = models.TextField()
