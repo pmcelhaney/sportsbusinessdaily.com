@@ -36,7 +36,7 @@ Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
 		<a href="/index.cfm?fuseaction=sbd.all&amp;ArticleID=#ArticleID#">{{ section.grouper }} </a>
     <ul>
     {% for article in section.list %}
-      <li><a href="/article/{{ article.id }}">{{ article.mini_headline }}</a></li>
+      <li><a href="http://localhost:8000{{ article.get_absolute_url }}">{{ article.mini_headline }}</a></li>
     {% endfor	%}
     </ul>
   </li>
@@ -76,7 +76,7 @@ Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
 <ul class="moreLink" style="font-size:8px;">
 
 {% for i in recent_issues %}
-<li style="font-size:8px;padding-bottom:3px;"><a class="moreLink" href="/issue/home/{{ i.issue_date|date:"Y-m-d" }}">{% if forloop.first %}Current Issue{% else %}{{ i.issue_date|date:"F j" }}{% endif %}</a></li>
+<li style="font-size:8px;padding-bottom:3px;"><a class="moreLink" href="http://localhost:8000{{ i.get_absolute_url }}">{% if forloop.first %}Current Issue{% else %}{{ i.issue_date|date:"F j" }}{% endif %}</a></li>
 {% endfor %}
 </ul>
 </cfoutput>

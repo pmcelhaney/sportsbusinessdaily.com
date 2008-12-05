@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import permalink
+
 import re
 
 
@@ -44,7 +46,11 @@ class Issue(models.Model):
     return int2roman(self.volume_number)
   
   def __unicode__ (self):
-    return self.issue_date.strftime('%A, %b %d, %Y')
+    return self.issue_date.strftime('%A, %b %d, %Y')  
+    
+  @permalink
+  def get_absolute_url(self):
+    return ('sbd.issue.views.home', [self.issue_date])  
 
 class HomePage(models.Model):
   issue = models.OneToOneField(Issue,primary_key=True)
@@ -66,6 +72,10 @@ class HomePage(models.Model):
     
   def __unicode__(self):
     return self.issue.__unicode__()
+    
+  @permalink
+  def get_absolute_url(self):
+    return ('sbd.issue.views.home', [self.issue_date])
    
 class PrintIssue(models.Model):
   issue = models.OneToOneField(Issue,primary_key=True)
@@ -99,6 +109,10 @@ class Article(models.Model):
   headline = models.CharField(max_length=200)
   mini_headline = models.CharField(max_length=200)
   body = models.TextField()
+
+  @permalink
+  def get_absolute_url(self):
+    return ('sbd.issue.views.single_article', [self.id])
 
   def __unicode__(self):
     return self.headline
