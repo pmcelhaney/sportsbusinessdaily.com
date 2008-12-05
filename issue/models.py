@@ -118,5 +118,9 @@ class Article(models.Model):
   def get_absolute_url(self):
     return ('sbd.issue.views.single_article', [self.id])
 
+  @property
+  def issue_date(self):
+    issue.issue_date
+
   def __unicode__(self):
     return self.headline
