@@ -82,12 +82,9 @@ for record in csv_reader(open("data/october_printissues.csv")):
   pi.quote_of_the_day = record['quote']
   pi.box1_header = record['box1header']
   pi.box1 = record['box1'] 
-  if "(null)" != record['box1']:
-  	pi.box1 = "" 
   pi.box2_header = record['box2header']
   pi.box2 = record['box2']
-  if "(null)" != record['box2']:
-  	 pi.box2 = "" 
+  pi.masthead = record['masthead']
   print pi
   pi.save()
  
