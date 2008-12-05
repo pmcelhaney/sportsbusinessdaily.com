@@ -94,7 +94,7 @@ for record in csv_reader(open("data/october_printissues.csv")):
  
 print "\nARTICLES" 
 for record in csv_reader(open("data/october_articles.csv")):
-  if (record['department'] != '(null)'):
+  if (record['department'] != ''):
     article = Article(pk=record['articleid'])
     article.issue = Issue(pk=parse_datetime(record['postdate']))
     article.section = Section(pk=record['department'])
