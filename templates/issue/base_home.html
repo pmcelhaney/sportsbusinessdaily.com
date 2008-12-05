@@ -36,7 +36,7 @@ Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
 		<a href="/index.cfm?fuseaction=sbd.all&amp;ArticleID=#ArticleID#">{{ section.grouper }} </a>
     <ul>
     {% for article in section.list %}
-      <li><a href="/article/{{ article.article_id }}">{{ article.mini_headline }}</a></li>
+      <li><a href="/article/{{ article.id }}">{{ article.mini_headline }}</a></li>
     {% endfor	%}
     </ul>
   </li>
