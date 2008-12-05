@@ -16,7 +16,18 @@ def int2roman(number):
       result += numeral
       number -= value
   return result
+ 
+class Fixture(models.Model):
+  name = models.CharField(max_length=50,primary_key=True)
+  label = models.CharField(max_length=200)
+  value = models.TextField(blank=True)
+  def __unicode__(self):
+    return self.label
   
+  class Meta:
+  	ordering = ['label', 'name']
+	  
+   
 class Section(models.Model):
   name = models.CharField(max_length=200)
   

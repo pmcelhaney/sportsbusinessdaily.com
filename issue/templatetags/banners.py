@@ -17,8 +17,18 @@ class BannerNode(template.Node):
   def render(self, context):
     raw_template = """
       <!-- {{ width }}x{{ height }} banner at position "{{ pos }}" in zone "{{ zone }}" -->
-      <iframe width="{{ width }}" height="{{ height }}" src="http://ad.doubleclick.net/adi/bzj.sportsbizdaily/{{ zone }};pos={{ pos }};sz={{ width }}x{{ height }};ord={{ ord }}?" MARGINWIDTH="0" MARGINHEIGHT="0" HSPACE="0" VSPACE="0" FRAMEBORDER="0" SCROLLING="no" BORDERCOLOR="#000000">
-  		</iframe>      	
+      <iframe 
+      	width="{{ width }}" 
+      	height="{{ height }}" 
+      	src="http://ad.doubleclick.net/adi/bzj.sportsbizdaily/{{ zone }};pos={{ pos }};sz={{ width }}x{{ height }};ord={{ ord }}?" 
+      	MARGINWIDTH="0" 
+      	MARGINHEIGHT="0" 
+      	HSPACE="0" 
+      	VSPACE="0" 
+      	FRAMEBORDER="0" 
+      	SCROLLING="no" 
+      	BORDERCOLOR="#000000">
+  	  </iframe>      	
     """
     t = Template(raw_template)
     c = Context({

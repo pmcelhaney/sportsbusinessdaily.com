@@ -1,4 +1,7 @@
 {% extends "issue/sbd_base.html" %}
+{% load banners %}
+
+
 {% block content %}
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -50,7 +53,7 @@ Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
 <!-- Left side ad -->
 <tr>
 <td align="center" valign="top">
-<br>[120x240]<br>
+<br>{% banner l1 120x240 %}<br>
 </td>
 </tr>
 <tr height="20"><td>&nbsp;</td></tr>
@@ -71,12 +74,10 @@ Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
 <div class="lists" style="font-size:8px;">
 <cfoutput>
 <ul class="moreLink" style="font-size:8px;">
-<li style="font-size:8px;padding-bottom:3px;"><a class="moreLink" href="/index.cfm?fuseaction=#xfa.home#&postDate=#dateformat(settings.globalVars.currentIssueDate,'yyyy-mm-dd')#">Current Issue</a></li>
 
-<li style="font-size:8px;padding-bottom:3px;"><a href="">November 10</a></li>
-<li style="font-size:8px;padding-bottom:3px;"><a href="">November 9</a></li>
-<li style="font-size:8px;padding-bottom:3px;"><a href="">November 8</a></li>
-<li style="font-size:8px;padding-bottom:3px;"><a href="">...</a></li>
+{% for i in recent_issues %}
+<li style="font-size:8px;padding-bottom:3px;"><a class="moreLink" href="/issue/home/{{ i.issue_date|date:"Y-m-d" }}">{% if forloop.first %}Current Issue{% else %}{{ i.issue_date|date:"F j" }}{% endif %}</a></li>
+{% endfor %}
 </ul>
 </cfoutput>
 </div>
@@ -88,7 +89,8 @@ Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
 <tr><td class="sideSectHead">THIS WEEK'S SBJ</td></tr>
 <tr>
 	<td>
-		<a href="http://www.sportsbusinessjournal.com"><img src="/content/sbjcover/<cfoutput>#settings.globalVars.sbjcover#</cfoutput>"></a>
+		{% comment %} The image should be a static image on SBJ updated when SBJ is published (e.g. www.sbj.com/cover_thumbnail.jpg ) {% endcomment %}
+		<a href="http://www.sportsbusinessjournal.com"><img src="http://www.sportsbusinessdaily.com/content/sbjcover/SBJ%20Home5.png "></a>
 		<a href="http://www.sportsbusinessjournal.com">Read This Week's Issue</a>
 	</td>
 </tr>
@@ -128,7 +130,7 @@ Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
 <cfif isDefined("settings.globalVars.tdiText") and settings.globalVars.tdiText NEQ "">
 <!-- Latest News -->
 <tr><td class="sideSectHead">LATEST NEWS</td></tr>
-<tr><td style="padding:0 5px; border:1px solid #cccccc;" id="latestNewsBox"><cfoutput>[TDI Text]</cfoutput></td></tr>
+<tr><td style="padding:0 5px; border:1px solid #cccccc;" id="latestNewsBox">{{ latest_news }}</td></tr>
 <tr height="20"><td>&nbsp;</td></tr>
 </cfif>
 
@@ -142,7 +144,9 @@ Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
 <ul class="lists">
 	<li>
 		<strong><a href="/index.cfm?fuseaction=tdi.articlesOfInterest">The Daily's Hot Reads</a></strong>
-		<cfif isDefined("settings.globalVars.aoiLinksText") and settings.globalVars.aoiLinksText NEQ ""><br><div style="padding-left:10px;" class="resourcesub"><a href="/index.cfm?fuseaction=tdi.articlesOfInterest##aoi1">[aoi links text]</a></div></cfif>
+		{% if hot_reads_link_text %}
+		<br><div style="padding-left:10px;" class="resourcesub"><a href="/index.cfm?fuseaction=tdi.articlesOfInterest##aoi1">{{ hot_reads_link_text }}</a></div>
+		{% endif %}
 	</li>
 	<li>
 		<strong><a href="/index.cfm?fuseaction=tdi.sportsBusinessWire">Sports Business Wire</a></strong>
@@ -153,9 +157,8 @@ Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
 </tr>
 </cfoutput>
 
-
-<!-- rightColumn global variable -->						
-<tr><td><cfoutput><div class="rightside">[right column]</div></cfoutput></td></tr>
+			
+<tr><td><cfoutput><div class="rightside">{{ resource_center_extras }}</div></cfoutput></td></tr>
 <tr height="20"><td>&nbsp;</td></tr>
 			
 
@@ -166,12 +169,12 @@ Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
 
 
 <tr><td class="sideSectHead">THE DAILY STAT</td></tr>
-<tr><td style="padding:0px;border:1px solid #cccccc;">[SBW Links Text]</td></tr>
+<tr><td style="padding:0px;border:1px solid #cccccc;">{{ daily_stat|safe }}</td></tr>
 <tr height="20"><td>&nbsp;</td></tr>
 
 
 <!-- Right column ad -->
-<tr><td align="center">[ad 120x240]<br/><br/></td></tr>
+<tr><td align="center">{% banner r1 120x240 %}<br/><br/></td></tr>
 
 </table>
 
