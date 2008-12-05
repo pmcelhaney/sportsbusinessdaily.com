@@ -8,18 +8,10 @@
 	<title>SportsBusiness Daily: {{ print_issue.issue_date|date:"l, F j, Y" }}</title>
 		<base href="http://www.sportsbusinessdaily.com/">
 	<link rel="stylesheet" href="/printIssue/printIssue.css" type="text/css" media="screen" title="no title" charset="utf-8">
-
-	{% comment %}
-	  TODO: Swap columns
-		(if swap columns)
-		<link rel="stylesheet" href="/printIssue/swapFrontPageColumns.css" type="text/css" media="screen" title="no title" charset="utf-8">
-	{% endcomment %}
-
-	
 	
 	<script language="javascript">
 		if (navigator.userAgent.indexOf("MSIE 6") != -1) {
-			document.write('<link rel="stylesheet" href="/printIssue/<cfif printIssue.swapColumns>swapFrontPageColumns_</cfif>ie6hack.css">')
+			document.write('<link rel="stylesheet" href="/printIssue/ie6hack.css">')
 		}
 	</script>
 
@@ -30,8 +22,6 @@
 
 <body id="printIssue">
 
-
-<cfoutput>
 
 <!-- BEGIN FRONT PAGE -->
 <div id="frontPage">
@@ -49,17 +39,16 @@
 	{{ print_issue.top_story|safe }}
 </div>
 
-<cfif printIssue.box1Header neq "" and printIssue.box2Header eq "">
+{% if print_issue.box1_header and not print_issue.box2_header %}
 <br id="clearingBreak">
-
-</cfif>
+{% endif %}
 
 <div id="quote">
 	<img class="boxHeader" src="/printIssue/Images/quote-of-the-day.jpg" alt="Quote of the Day"/>
 	{{ print_issue.quote_of_the_day|safe }}
 </div>
 
-{% if print_issue.box1 and print_issue.box2 %}
+{% if print_issue.box1_header and print_issue.box2_header %}
 <br id="clearingBreak">
 {% endif %}
 
@@ -79,7 +68,6 @@
 
 <!-- END FRONT PAGE -->
 
-</cfoutput>
 
 <br clear="all">
 <!-- Masthead -->
@@ -91,9 +79,6 @@
 
 
 <!-- Table of Contents -->
-<cfoutput query="articles" group="department">
-	
-
 {% regroup articles by section as articles_by_section %}
 
 {% for section in articles_by_section %}	
@@ -102,9 +87,7 @@
 		<span class="printIssueTOCHeadline">{{ section.grouper }}</span>
 		<ul>
 		{% for article in section.list %}	
-		<cfoutput>
 			<li>{% counter %}. {{ article.headline }}</li>
-		</cfoutput>
 		{% endfor %}
 		</ul>
 	</li>
@@ -112,14 +95,7 @@
 {% endfor %}
 
 
-
-
-
-</cfoutput>
-
-
 <!-- Articles -->
-<cfoutput query="articles" group="department">
 <div class="printIssueBody">
 	
 	{% for section in articles_by_section %}	
@@ -141,7 +117,6 @@
 
 </div>
 
-</cfoutput>
 
 <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
 </script>
