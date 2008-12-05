@@ -59,9 +59,9 @@
 	{{ print_issue.quote_of_the_day|safe }}
 </div>
 
-{% comment %} Only when both boxes are present. {% endcomment %}
+{% if print_issue.box1 and print_issue.box2 %}
 <br id="clearingBreak">
-
+{% endif %}
 
 <div id="box1">
 	{% if print_issue.box1_header %}

@@ -27,7 +27,10 @@ class csv_reader:
     return self
   
   def __getitem__(self, name):
-    return unicode(self.current[self.column_map[name]], 'utf-8')
+    value = self.current[self.column_map[name]]
+    if "(null)" == value:
+      value = ""
+    return unicode(value, 'utf-8')
 
   def columns(self):
     return self.column_map
@@ -78,9 +81,13 @@ for record in csv_reader(open("data/october_printissues.csv")):
   pi.headlines = record['headlines']
   pi.quote_of_the_day = record['quote']
   pi.box1_header = record['box1header']
-  pi.box1 = record['box1']
+  pi.box1 = record['box1'] 
+  if "(null)" != record['box1']:
+  	pi.box1 = "" 
   pi.box2_header = record['box2header']
   pi.box2 = record['box2']
+  if "(null)" != record['box2']:
+  	 pi.box2 = "" 
   print pi
   pi.save()
  
