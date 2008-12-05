@@ -43,10 +43,12 @@ def parse_datetime(str):
 
 print "\nSECTIONS"
 for record in csv_reader(open("data/departments.csv")):  
-  section = Section(pk=record['departmentid'])
-  section.name = record['department']
-  print section
-  section.save()
+  if record["book"] == "SBD" and record["status"] == "active":
+    section = Section(pk=record['departmentid'])
+    section.name = record['department']
+    section.rank = record['rank']
+    print section
+    section.save()
 
 print "\nISSUES"
 for record in csv_reader(open("data/october_issues.csv")):

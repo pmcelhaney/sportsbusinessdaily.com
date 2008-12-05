@@ -32,6 +32,10 @@ class Fixture(models.Model):
    
 class Section(models.Model):
   name = models.CharField(max_length=200)
+  rank = models.SmallIntegerField()
+  
+  class Meta:
+    ordering = ['rank']
   
   def __unicode__(self):
     return self.name
