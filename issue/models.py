@@ -120,7 +120,10 @@ class Article(models.Model):
 
   @property
   def issue_date(self):
-    issue.issue_date
+    return self.issue.issue_date
 
   def __unicode__(self):
     return self.headline
+    
+  class Meta:
+    ordering = ['-issue', 'section']    
