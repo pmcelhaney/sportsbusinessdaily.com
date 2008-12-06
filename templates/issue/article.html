@@ -1,10 +1,11 @@
-<html>
-	<head>
-		<title>{{ article.headline }}</title>
-	</head>
-	<body>
-		<h2>{{ article.headline }}</h2>
-		
-		{{ article.body|safe }}
-	</body>
-</html>
+{% extends "issue/base_home.html" %}
+
+
+{%block title%}{{ article.headline }}{% endblock %}
+
+
+{% block home_page %}
+	<h2>{{ article.headline }}</h2>
+	
+	{{ article.body|safe }}
+{% endblock %}

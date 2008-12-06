@@ -10,8 +10,10 @@ def home(request, issue_date):
   return render_to_response('issue/home.html', params)
   
 def single_article(request, article_id):
-  a = get_object_or_404(Article, pk=article_id)
-  return render_to_response('issue/article.html', {'article': a})
+  article = get_object_or_404(Article, pk=article_id)
+  issue = article.issue
+  articles = issue.article_set.all().order_by('section','headline')
+  return render_to_response('issue/article.html', {'article': article, 'articles': articles, 'issue': issue.homepage })
   
 def print_issue(request, issue_date):
   issue = get_object_or_404(Issue, pk=issue_date)
