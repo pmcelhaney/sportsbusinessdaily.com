@@ -1,0 +1,114 @@
+{% extends "issue/sbd_base.html" %}
+{% load banners %}
+
+
+{% block content %}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	
+<!-- BEGIN LEFT COLUMN -->	
+<td width="155" valign="top" style="background-image:url(/templateimg/leftGutterBG.gif);width:155px;background-repeat:repeat-y;">
+{% include "issue/left_column.html" %}
+
+</td>
+<!-- END LEFT COLUMN -->
+
+
+<!-- BEGIN CENTER CONTENT -->
+<td style="padding:5px;" width="395" valign="top">
+
+
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+	<!-- Top Stories -->
+	<tr><td class="bodySectHead">TOP STORIES</td></tr>
+
+	<tr>
+	<td valign="top">
+
+	<div id="topStory">
+	{{ issue.top_story|safe }}
+	</div>
+
+	<div id="headlines">
+	{{ issue.headlines|safe }}
+	</div>
+
+	<br/>
+
+	</td>
+	</tr>
+
+	</cfoutput>
+
+
+	<!-- Departments -->
+	<tr><td class="bodySectHead">DEPARTMENTS</td></tr>
+
+	<tr>
+	<td>
+
+
+
+		<table width="100%" cellpadding="5" cellspacing="0" border="0">
+		<tr>
+
+		<td valign="top">
+		{% regroup articles by section as articles_by_section %}	
+		{% for section in articles_by_section %}
+
+			<table style="border:1px solid ##cccccc;" width="100%" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td>
+					<div class="depHeads">{{ section.grouper }}</div>
+					<div class="deptlists">
+						<ul class="moreLink">
+						{% for article in section.list %}	
+							<li><a href="http://localhost:8000{{ article.get_absolute_url }}">{{ article.mini_headline }}</a></li>
+						{% endfor %}
+						</ul>
+					</div>
+					</td>
+				</tr>
+			</table>
+
+
+
+		<br>
+		{% endfor %}
+
+		</td>
+
+		<td width="50%" valign="top">
+			Second column of headlines
+		</td>
+		</tr>
+		</table>
+
+
+	</td>
+	</tr>
+	</table>
+
+
+
+</td>
+<!-- END CENTER CONTENT -->
+
+
+
+<!-- BEGIN RIGHT COLUMN -->
+<td width="210" valign="top" style="border-left:1px solid #000000;border-right:1px solid #000000;">
+
+{% include "issue/right_column.html" %}
+
+</td>
+<!-- END RIGHT COLUMN -->
+
+</tr>
+</table>			
+
+
+
+{% endblock %}

@@ -1,11 +1,12 @@
-{% extends "issue/base_home.html" %}
+{% extends "issue/article_base.html" %}
 
 
 {%block title%}{{ article.headline }}{% endblock %}
 
+{% block department_name %}{{ article.section }}{% endblock %}
 
-{% block home_page %}
-	<h2>{{ article.headline }}</h2>
+{% block article %}
+	<h1 style="margin: 0pt; padding: 0pt; font-size: 16px;">{{ article.headline }}</h1>
 	
 	{{ article.body|safe }}
 {% endblock %}

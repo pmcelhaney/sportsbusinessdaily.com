@@ -1,0 +1,42 @@
+{% extends "issue/sbd_base.html" %}
+{% load banners %}
+
+
+{% block content %}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+	
+<!-- BEGIN LEFT COLUMN -->	
+<td width="155" valign="top" style="background-image:url(/templateimg/leftGutterBG.gif);width:155px;background-repeat:repeat-y;">
+{% include "issue/left_column.html" %}
+
+</td>
+<!-- END LEFT COLUMN -->
+
+
+<!-- BEGIN CENTER CONTENT -->
+<td colspan="2" width="605" valign="top" style="border-right:1px solid #000000;">
+	
+	<table width="100%" border="0" bordercolor="red" cellpadding="0" cellspacing="0">
+		<tr>
+			<td valign="top" class="insideSectHead">
+				{% block department_name %}(Department Name){% endblock %}
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:10px;" colspan="2">
+				<cfoutput>{% block article %} [article goes here] {% endblock %}</cfoutput>
+			</td>
+		</tr>
+	</table>	
+	
+
+</td>
+<!-- END CENTER CONTENT -->
+
+</table>			
+
+
+
+{% endblock %}
