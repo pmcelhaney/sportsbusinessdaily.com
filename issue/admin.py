@@ -1,7 +1,7 @@
-from sbd.issue.models import Section, Article, Issue, PrintIssue, HomePage, Fixture
+from sbd.issue.models import Section, Article, Issue, PrintIssue, HomePage, Fixture, Company, Sport
 from django.contrib import admin
 
-admin.site.register([PrintIssue, HomePage, Fixture])
+admin.site.register([PrintIssue, HomePage, Fixture, Company, Sport])
 
 class SectionAdmin(admin.ModelAdmin):
   list_display = ('name', 'rank')
@@ -14,10 +14,12 @@ class IssueAdmin(admin.ModelAdmin):
  
 admin.site.register(Issue, IssueAdmin)
 
+
 class ArticleAdmin(admin.ModelAdmin):
   list_display = ['headline', 'section', 'issue_date']
   list_filter = ('section',)
   search_fields = ('headline', 'body')
+
   
 admin.site.register(Article, ArticleAdmin)
 	

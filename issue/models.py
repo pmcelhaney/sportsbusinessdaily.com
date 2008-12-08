@@ -106,6 +106,20 @@ class PrintIssue(models.Model):
     
   def __unicode__(self):
     return self.issue.__unicode__()
+
+  
+class Company(models.Model):
+  name = models.CharField(max_length=200)
+  ticker_symbol = models.CharField(max_length=5)
+
+  def __unicode__(self):
+    return self.name    
+
+class Sport(models.Model):
+  name = models.CharField(max_length=200)
+
+  def __unicode__(self):
+    return self.name  
   
 class Article(models.Model):
   issue = models.ForeignKey(Issue)
@@ -113,6 +127,8 @@ class Article(models.Model):
   headline = models.CharField(max_length=200)
   mini_headline = models.CharField(max_length=200)
   body = models.TextField()
+  companies = models.ManyToManyField(Company)
+  sports = models.ManyToManyField(Sport)
 
   @permalink
   def get_absolute_url(self):
