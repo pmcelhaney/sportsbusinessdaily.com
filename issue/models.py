@@ -127,8 +127,8 @@ class Article(models.Model):
   headline = models.CharField(max_length=200)
   mini_headline = models.CharField(max_length=200)
   body = models.TextField()
-  companies = models.ManyToManyField(Company)
-  sports = models.ManyToManyField(Sport)
+  companies = models.ManyToManyField(Company,null=True,blank=True)
+  sports = models.ManyToManyField(Sport,null=True,blank=True)
 
   @permalink
   def get_absolute_url(self):
