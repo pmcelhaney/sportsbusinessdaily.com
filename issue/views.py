@@ -5,7 +5,7 @@ def home(request, issue_date):
   issue = get_object_or_404(Issue, pk=issue_date)	
   params = dict([(f.name, f.value) for f in Fixture.objects.all()])
   params['issue'] = issue.homepage
-  params['articles'] = issue.article_set.all().order_by('section','headline')
+  params['articles'] = issue.article_set.all().order_by('section')
   params['recent_issues'] = Issue.objects.all().order_by('-issue_date')[:10]
   return render_to_response('issue/home.html', params)
   

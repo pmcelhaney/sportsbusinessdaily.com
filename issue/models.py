@@ -124,6 +124,7 @@ class Sport(models.Model):
 class Article(models.Model):
   issue = models.ForeignKey(Issue)
   section = models.ForeignKey(Section)
+  rank = models.SmallIntegerField(null=True)
   headline = models.CharField(max_length=200)
   mini_headline = models.CharField(max_length=200)
   body = models.TextField()
@@ -142,4 +143,4 @@ class Article(models.Model):
     return self.headline
     
   class Meta:
-    ordering = ['-issue', 'section']    
+    ordering = ['-issue', '-rank']    
