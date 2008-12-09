@@ -48,4 +48,36 @@
 </tbody>
 </table>
 
+
+<table width="100%" cellpadding="5" cellspacing="3" border="0"  class="rightside">
+	<tr bgcolor="#B6B4B5">
+	<td width="50%" align="left" valign="top">
+		<b>Related Stories By Company</b>
+	</td>
+	<td width="50%" align="left" valign="top">
+		<b>Related Stories By Sport</b>
+	</td>
+	</tr>
+	<tr bgcolor="#D8CFD2">
+	<td valign="top">
+  	{% for a in related_articles_by_company %}
+			<strong><a href="{{ a.get_absolute_url }}">{{ a.mini_headline|safe }}</a></strong>
+			<br>
+			{{ a.issue_date|date:"F j, Y" }} :
+      SportsBusiness Daily
+			<br><br>
+	  {% endfor %}
+
+ 		</td>
+ 		<td valign="top">
+    	{% for a in related_articles_by_sport %}
+  			<strong><a href="{{ a.get_absolute_url }}">{{ a.mini_headline|safe }}</a></strong>
+  			<br>
+				{{ a.issue_date|date:"F j, Y" }} :
+        SportsBusiness Daily
+  			<br><br>
+		  {% endfor %}
+ 		</td>
+  </tr>
+</table>
 {% endblock %}
