@@ -38,12 +38,16 @@ class Section(models.Model):
     ordering = ['rank']
   
   def __unicode__(self):
-    return self.name
-  
+    return self.name    
+    
 class Issue(models.Model):
   issue_date = models.DateField(primary_key=True)
   volume_number = models.IntegerField()
   issue_number = models.IntegerField()
+  
+  @property
+  def articles(self):
+  	return self.article_set.all().order_by('section')
   
   @property
   def volume_number_roman(self):
@@ -130,7 +134,19 @@ class Article(models.Model):
   body = models.TextField()
   companies = models.ManyToManyField(Company,null=True,blank=True)
   sports = models.ManyToManyField(Sport,null=True,blank=True)
+  
+  def related_articles_by_company(self):
+  	return Article.objects.filter(companies__in=self.companies.all()).exclude(id=self.id).distinct().order_by('issue', 'headline')[:5]
 
+  def related_articles_by_sport(self):
+  	return Article.objects.filter(sports__in=self.sports.all()).exclude(id=self.id).distinct().order_by('issue', 'headline')[:5]
+
+  def has_related_articles(self): 
+  	"""Does this article have any related articles? If it has any tags, it does. So this function
+  	could also be called has_tags.
+  	"""
+	return len(self.companies.all()) or len(self.sports.all())
+  	
   @permalink
   def get_absolute_url(self):
     return ('sbd.issue.views.single_article', [self.id])

@@ -6,49 +6,25 @@
 
 
 {% block article %}	
+
+
 <table width="100%" border="0" bordercolor="red" cellpadding="0" cellspacing="0">
-	<tr>
-		<td valign="top" class="insideSectHead">
-			{{ article.section }}
-		</td>
-	</tr>
-	<tr>
-		<td style="padding:10px;" colspan="2">
-			<h1 style="margin: 0pt; padding: 0pt; font-size: 16px;">{{ article.headline }}</h1>
-			{{ article.body|safe }} 
-		</td>
-	</tr>
-</table>
+<tr>
+<td valign="top" class="insideSectHead">
+{{ section }}
+</td>
+</tr>
+<tr>
 
-<table width="100%">
-	<tbody><tr class="bodySectHead">
-		<td>
-			<table cellpadding="0" cellspacing="0" width="100%">
-				<tbody><tr>
-
-					<td style="padding-left: 5px;" class="rightside">ALSO IN THIS SECTION</td>
-					<td style="padding-right: 5px;" align="right"></td>
-				</tr>
-			</tbody></table>
-		</td>
-	</tr>
-	<tr>
-		<td style="padding: 5px;" class="rightside">
-
-		<ul>
-				{% for a in articles_in_section %}
-					{% ifnotequal article a %}
-					<li><a href="http://localhost:8000{{ a.get_absolute_url }}"><strong>{{ a.headline }}</strong></a>
-					{% endifnotequal %}
-				{% endfor %}
-			<li><a href="#settings.self#fuseaction=#fusebox.circuit#.all&amp;articleID=#article.articleID#"><strong>View All Articles from This Section</strong></a></li>
-		</ul>
-		</td>
-	</tr>
-</tbody>
-</table>
+<td style="padding:10px;" colspan="2">
 
 
+{% for article in articles_in_section %}
+
+<h1 style="margin: 0pt; padding: 0pt; font-size: 16px;">{{ article.headline }}</h1>
+{{ article.body|safe }} 
+
+{% if article.has_related_articles %}
 <table width="100%" cellpadding="5" cellspacing="3" border="0"  class="rightside">
 	<tr bgcolor="#B6B4B5">
 	<td width="50%" align="left" valign="top">
@@ -80,4 +56,16 @@
  		</td>
   </tr>
 </table>
+{% endif %}
+
+<br>
+{% endfor %}
+
+
+</td>
+</tr>
+</table>
+
+
+
 {% endblock %}

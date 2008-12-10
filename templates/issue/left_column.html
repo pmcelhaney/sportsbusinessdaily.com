@@ -18,10 +18,10 @@ Vol. {{ issue.volume_number_roman }} -- No. {{ issue.issue_number }}<br>
 <table width="155" border="0" cellpadding="0" cellspacing="0"><tr><td>
 <div id="sideNav">
 <ul id="nav">
-  {% regroup articles by section as articles_by_section %}	
+  {% regroup issue.articles by section as articles_by_section %}	
 	{% for section in articles_by_section %}
   <li>
-		<a href="/index.cfm?fuseaction=sbd.all&amp;ArticleID=#ArticleID#">{{ section.grouper }} </a>
+	<a href="http://localhost:8000{{ section.get_absolute_url }}">{{ section.grouper }} </a>
     <ul>
     {% for article in section.list %}
       <li><a href="http://localhost:8000{{ article.get_absolute_url }}">{{ article.mini_headline }}</a></li>

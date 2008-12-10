@@ -5,7 +5,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^home/(?P<issue_date>\d{4}-\d{2}-\d{2})$', 'sbd.issue.views.home'),
+    (r'^(?P<issue_date>\d{4}-\d{2}-\d{2})/$', 'sbd.issue.views.home'),
     (r'^article/(?P<article_id>\d+)$', 'sbd.issue.views.single_article'),
-    (r'^print-issue/(?P<issue_date>\d{4}-\d{2}-\d{2})$', 'sbd.issue.views.print_issue'),
+    (r'^(?P<issue_date>\d{4}-\d{2}-\d{2})/section/(?P<id>\d+)$', 'sbd.issue.views.section'),
+    (r'^(?P<issue_date>\d{4}-\d{2}-\d{2})/print$', 'sbd.issue.views.print_issue'),
 )
