@@ -64,6 +64,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.flatpages'
 )
 
 ROOT_URLCONF = 'sbd.urls'
@@ -84,5 +85,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'django.contrib.flatpages',
     'sbd.issue',
 )
