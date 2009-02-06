@@ -8,6 +8,7 @@ settings.configure(
     DATABASE_NAME = os.path.join(os.path.dirname(__file__), 'sbd.db').replace('\\','/'),
 )
 
+from django.contrib.flatpages.models import *
 from issue.models import *
 
 import csv
@@ -144,6 +145,17 @@ def related_companies():
     print "[%s] %s" % (company, article)
     article.save()    
 
+
+def pages():
+  print "\nPages"
+  for record in csv_reader(open("data/pages.csv")): 
+    page, created = FlatPage.objects.get_or_create(url="/page/%s" % record["pageid"])
+    page.title = record["title"]
+    page.content = record["body"]
+    page.save()
+    print page
+
+pages()
 sections()
 issues()
 home_pages()
@@ -153,6 +165,7 @@ sports()
 companies()
 related_sports()
 related_companies()
+
 
 
   
