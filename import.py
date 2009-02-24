@@ -148,12 +148,24 @@ def related_companies():
 
 def pages():
     print "\nPages"
-    for record in csv_reader(open("data/pages.csv")): 
-        page, created = FlatPage.objects.get_or_create(url="/page/%s" % record["pageid"])
+    hard_urls = {
+        '38' : '/faq',
+        '83' : '/tos',
+        '82' : '/privacy',
+    }
+    for record in csv_reader(open("data/pages.csv")):
+        page_id = record["pageid"]
+        if page_id in hard_urls:
+            url = hard_urls[page_id]
+        else:
+            url = "/page/%s" % record["pageid"]
+        
+        page, created = FlatPage.objects.get_or_create(url=url)
         page.title = record["title"]
         page.content = record["body"]
         page.save()
         print page
+
 
 pages()
 sections()
