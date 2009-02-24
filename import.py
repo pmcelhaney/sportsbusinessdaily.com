@@ -8,6 +8,7 @@ settings.configure(
         DATABASE_NAME = os.path.join(os.path.dirname(__file__), 'sbd.db').replace('\\','/'),
 )
 
+from django.contrib.sites.models import Site
 from django.contrib.flatpages.models import *
 from issue.models import *
 
@@ -149,20 +150,21 @@ def related_companies():
 def pages():
     print "\nPages"
     hard_urls = {
-        '38' : '/faq',
-        '83' : '/tos',
-        '82' : '/privacy',
+        '38' : '/faq/',
+        '83' : '/tos/',
+        '82' : '/privacy/',
     }
     for record in csv_reader(open("data/pages.csv")):
         page_id = record["pageid"]
         if page_id in hard_urls:
             url = hard_urls[page_id]
         else:
-            url = "/page/%s" % record["pageid"]
+            url = "/page/%s/" % record["pageid"]
         
         page, created = FlatPage.objects.get_or_create(url=url)
         page.title = record["title"]
         page.content = record["body"]
+        page.sites = Site.objects.all()
         page.save()
         print page
 
