@@ -1,10 +1,68 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-    "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html>
-<head>
-<title>{{ flatpage.title }}</title>
-</head>
-<body>
-{{ flatpage.content }}
-</body>
-</html>
+{% extends "issue/sbd_base.html" %}
+{% load banners %}
+
+{% block title %}{{ flatpage.title }}{% endblock %}
+
+{% block content %}
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="155" valign="top" style="background-image:url(/templateimg/leftGutterBG.gif);width:155px;background-repeat:repeat-y;">
+						<table width="155" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td valign="top">
+								<br><br>								
+									<table width="155" border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<td>
+												<div id="sideNav">
+													<!-- Left Nav Begin -->
+													<ul id="nav">
+														<li><a href="">#Department#</a>
+															<ul>								
+																<li><a href="">#MiniHeadline#</a></li>
+															</ul>
+														</li>
+													</ul>												
+												<!-- Left Nav End -->
+												</div>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" valign="top">
+									<br><cfoutput>{% banner l1 120x240 %}</cfoutput><br>
+								</td>
+							</tr>
+							<tr height="20"><td>&nbsp;</td></tr>
+						</table>
+					</td>
+					<!-- Call for Middle Column -->
+					<td colspan="2" width="605" valign="top" style="border-right:1px solid #000000;">
+	<cfoutput query="attributes.qPage">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="insideSectHead">
+					{{ flatpage.title }}
+				</td>
+			</tr>
+		<cfparam name="URL.FeatureID" type="string" default="">
+		  <tr>
+			<td style="padding: 5px">
+				{{ flatpage.content }}
+			</td>
+		  </tr>
+		</table>
+		</cfif>
+	</cfoutput>
+</td>
+</tr>
+</table>
+
+{% endblock %}
+
+
+
+
