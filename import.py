@@ -16,6 +16,7 @@ import csv
 from datetime import *
 
 class csv_reader:
+    """This is like csv.DictReader(), but it does some extra stuff to normalize my data."""
     def __init__(self, file):
         self.reader = csv.reader(file)
         columns = self.reader.next()
